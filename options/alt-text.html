@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Alt Text</title>
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+
+  <body>
+    <nav id="nav-bar">
+      <ul>
+        <li><a href="/index.html">Home</a></li>
+        <li>
+          <a class="current-page" href="/options/alt-text.html">Add Alt Text</a>
+        </li>
+        <li>
+          <a href="/options/table-to-flexbox.html">Convert Table to Flexbox</a>
+        </li>
+        <li>
+          <a class="disabled" href="/options/table-to-grid.html"
+            >Convert Table to Grid</a
+          >
+        </li>
+        <li>
+          <a class="disabled" href="/options/adjust-border.html"
+            >Adjust Border</a
+          >
+        </li>
+      </ul>
+    </nav>
+    <div class="main-content" id="main-content">
+      <div class="alt-container">
+        <h1>Add Alt Text to an Element</h1>
+
+        <label for="html-input">Enter your HTML:</label>
+        <textarea id="html-input" rows="5" class="text-field html-input">
+<div id="sample">This is a sample element.</div></textarea
+        >
+
+        <label for="element-id">Element ID:</label>
+        <input type="text" id="element-id" class="text-field" value="sample" />
+
+        <label for="alt-text">Alt Text:</label>
+        <input
+          type="text"
+          id="alt-text"
+          class="text-field"
+          value="This is alt text for the sample element."
+        />
+
+        <button id="apply-changes-alt-text">Apply Changes</button>
+
+        <div class="result">
+          <h2>Your HTML:</h2>
+          <div id="html-output" class="text-field html-input"></div>
+
+          <h2>Rendered HTML:</h2>
+          <div id="render-output" class="output-field"></div>
+
+          <h2>Updated HTML:</h2>
+          <div id="updated-html" class="text-field html-input"></div>
+
+          <h2>Rendered Updated HTML:</h2>
+          <div id="rendered-updated-html" class="output-field"></div>
+        </div>
+      </div>
+      <button id="reset-page">Reset</button>
+    </div>
+
+    <script src="/myscript.js"></script>
+    <script>
+      window.onload = function () {
+        document.getElementById("apply-changes-alt-text").onclick =
+          applyAltTextChanges;
+        document.getElementById("reset-page").onclick = resetAltTextPage;
+      };
+      var HtmlInput = document.getElementById('html-input');
+
+HtmlInput.addEventListener('focus', function() {
+  this.value = '';
+});
+    </script>
+  </body>
+</html>
+
+<style>
+  .disabled {
+    pointer-events: none;
+    color: gray;
+    text-decoration: none;
+  }
+</style>

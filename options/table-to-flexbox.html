@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Convert Table to Flexbox</title>
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+
+  <body>
+    <nav id="nav-bar">
+      <ul>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/options/alt-text.html">Add Alt Text</a></li>
+        <li>
+          <a class="current-page" href="/options/table-to-flexbox.html"
+            >Convert Table to Flexbox</a
+          >
+        </li>
+        <li>
+          <a href="/options/table-to-grid.html" class="disabled"
+            >Convert Table to Grid (Coming Soon)</a
+          >
+        </li>
+        <li>
+          <a href="/options/adjust-border.html" class="disabled"
+            >Adjust Border (Coming Soon)</a
+          >
+        </li>
+      </ul>
+    </nav>
+    <div class="main-content" id="main-content">
+      <div class="alt-container">
+        <h1>Convert Table to Flexbox</h1>
+
+        <p class="instructions">Enter a table:</p>
+        <textarea
+          id="table-html-input"
+          rows="5"
+          class="text-field html-input"
+          placeholder="Enter a table"
+        >
+                <table>
+                    <tr>
+                        <th>Header 1</th>
+                        <th>Header 2</th>
+                    </tr>
+                    <tr>
+                        <td>Data 1</td>
+                        <td>Data 2</td>
+                    </tr>
+                </table>
+            </textarea
+        >
+
+        <div style="display: flex; justify-content: space-around">
+          <div
+            class="padding-slider"
+            style="display: flex; align-items: center"
+          >
+            <label for="padding-value">Padding:</label>
+            <input
+              type="range"
+              id="padding-slider"
+              min="0"
+              max="20"
+              step="1"
+              value="5"
+              style="margin-top: 0px"
+            />
+            <span id="padding-value">5px</span>
+          </div>
+          <div class="margin-slider" style="display: flex; align-items: center">
+            <label for="margin-value">Margin:</label>
+            <input
+              type="range"
+              id="margin-slider"
+              min="0"
+              max="20"
+              step="1"
+              value="5"
+              style="margin-top: 0px"
+            />
+            <span id="margin-value">5px</span>
+          </div>
+        </div>
+
+        <button id="apply-changes-table-flexbox">Apply Changes</button>
+
+        <div class="result">
+          <h2>Your HTML:</h2>
+          <div id="table-html-output" class="output-field"></div>
+
+          <h2>Rendered HTML:</h2>
+          <div id="table-render-output" class="output-field"></div>
+
+          <h2>Converted HTML (Flexbox):</h2>
+          <div id="table-updated-html" class="output-field"></div>
+
+          <h2>Rendered Converted HTML (Flexbox):</h2>
+          <div id="table-rendered-updated-html" class="output-field"></div>
+        </div>
+      </div>
+      <button id="reset-table-flexbox">Reset</button>
+    </div>
+
+    <script src="/myscript.js"></script>
+    <script>
+      window.onload = function () {
+        document.getElementById("apply-changes-table-flexbox").onclick =
+          convertTableToFlexbox;
+        document.getElementById("reset-table-flexbox").onclick =
+          resetTableFlexbox;
+        var tableHtmlInput = document.getElementById("table-html-input");
+
+        tableHtmlInput.addEventListener("focus", function () {
+          this.value = "";
+        });
+      };
+    </script>
+  </body>
+</html>
+
+<style>
+  .disabled {
+    pointer-events: none;
+    color: gray;
+    text-decoration: none;
+  }
+
+  .padding-slider {
+    margin: 20px 0px;
+  }
+
+  .padding-slider input[type="range"],
+  .margin-slider input[type="range"] {
+    width: 150px; /* Adjust the width as desired */
+  }
+
+  .padding-slider span,
+  .margin-slider span {
+    width: 40px; /* Adjust the width as desired */
+  }
+
+  .padding-slider-container input[type="range"]::-webkit-slider-thumb,
+  .padding-slider-container input[type="range"]::-moz-range-thumb,
+  .padding-slider-container input[type="range"]::-ms-thumb,
+  .margin-slider-container input[type="range"]::-webkit-slider-thumb,
+  .margin-slider-container input[type="range"]::-moz-range-thumb,
+  .margin-slider-container input[type="range"]::-ms-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #007bff;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+
+  .padding-slider-container input[type="range"]::-webkit-slider-thumb:hover,
+  .padding-slider-container input[type="range"]::-moz-range-thumb:hover,
+  .padding-slider-container input[type="range"]::-ms-thumb:hover,
+  .margin-slider-container input[type="range"]::-webkit-slider-thumb:hover,
+  .margin-slider-container input[type="range"]::-moz-range-thumb:hover,
+  .margin-slider-container input[type="range"]::-ms-thumb:hover {
+    background-color: #0056b3;
+  }
+
+  .padding-slider-container input[type="range"]::-webkit-slider-thumb:active,
+  .padding-slider-container input[type="range"]::-moz-range-thumb:active,
+  .padding-slider-container input[type="range"]::-ms-thumb:active,
+  .margin-slider-container input[type="range"]::-webkit-slider-thumb:active,
+  .margin-slider-container input[type="range"]::-moz-range-thumb:active,
+  .margin-slider-container input[type="range"]::-ms-thumb:active {
+    background-color: #004080;
+  }
+
+  .output-field {
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+    word-wrap: break-word;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    background-color: #ffffff;
+    overflow-x: auto;
+  }
+
+  #table-rendered-updated-html > div {
+    border: none;
+  }
+
+  #table-rendered-updated-html pre {
+    margin: 0; /* Added to remove default margin of the <pre> element */
+  }
+</style>
